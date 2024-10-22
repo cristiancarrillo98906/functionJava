@@ -8,6 +8,7 @@ public class javaFunctions {
     // Función principal (HILO DE EJECUCIÓN PRINCIPAL)
     // MAIN RUNTIME THREAD
     public static void main(String[] args) {
+        try{
     saludar();
     saludar();
     saludar2("Cristian");
@@ -30,10 +31,34 @@ public class javaFunctions {
         // int edad = scn.nextLine();
         System.out.printf("Tu edad es de %d años \n",calcularEdad(anyoNacimiento));
 
-    for (int i=0; i<20; i++){
+    /*for (int i=0; i<20; i++){
         saludar();
+    }*/
+
+
+        /* Instrucciones que se pretender ejecutar
+        *  y que van a estar protegidas
+        * */
+        System.out.println("Introduzca un número");
+        int numero = Integer.parseInt(scn.nextLine());
+        if(numero<0){
+            // el throw fuerza el error a que entre en el catch
+            throw new Exception("El número no puede ser negativo"); // el throw lanza una exception en el caso de ocurrir un error, y lo envia al catch a que capture el error
+        }
+        System.out.println("Has introducido el nª : " +numero);
+    } catch (Exception e){ // la 'e' es el objeto que captura el errro capturado
+        System.out.println("Ha ocurrido un error!!!!");
+        System.out.println(e.getMessage()); // Esto es lo más usado para saber los errores y muestra lo que contiene la excepcion sobre el error capturado
+        //e.printStackTrace(); // esto muestra las lineas rojas de codigo sobre el error capturado
+    } finally {
+        //OPCIONAL
+        //Instrucciones que se van a ejecutar si o si
+        //exista o no exista error
+        System.out.println("Programa Terminado! ");
     }
-    }
+
+    } // FINAL MAIN
+
 
     /* CREAR NUESTRAS FUNCIONES
          FUERA DEL MAIN
@@ -72,9 +97,23 @@ public class javaFunctions {
         return a + b; // ESTO EQUIVALE A LA LINEA DE ARRIBA
     }
 
-    public static int calcularEdad(int anyoNacimiento){
+    public static int calcularEdad(int anyoNacimiento) throws Exception {
         // int edad = ANYO_ACTUAL - anyoNacimiento;
         // return edad;
-        return ANYO_ACTUAL- anyoNacimiento;
+        //return 2024 - anyoNacimiento;
+        int edad = -1;
+        try{
+            if(anyoNacimiento < 0 ){
+                throw new Exception("El año de nacimiento no puede ser negativo");
+            }else {
+                edad = ANYO_ACTUAL - anyoNacimiento;
+            }
+        } catch (Exception e){
+            System.out.println("Error dentro de la función!!");
+            System.out.println(e.getMessage());
+        }finally {
+            return edad;
+        }
     }
 }
+
